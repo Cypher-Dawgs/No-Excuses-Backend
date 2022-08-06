@@ -22,5 +22,8 @@ router.post(
 router.post("/sign-out", isAuth, (req, res) => {
   adminController.signOut(req, res);
 });
+router.post("/pushMeal", (req, res) => {
+  adminController.pushMeal(req, res);
+});
 
 module.exports = router;

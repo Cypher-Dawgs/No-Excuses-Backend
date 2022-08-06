@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const { Admin } = require("../models");
+const Meal = require("../models/Meal.model");
 
 // creating new admin
 const createUser = async (req, res) => {
@@ -84,8 +86,24 @@ const signOut = async (req, res) => {
   }
 };
 
+const pushMeal = async (req, res) => {
+  try {
+    const meal = new Meal({
+      _id: new mongoose.Types.ObjectId(),
+      range: req.body.range,
+      dietPlan: req.body.dietPlan,
+      exercisePlan: req.body.exercisePlan,
+    });
+    meal.save();
+    res.json({ success: true, message: "Meal added successfully!" });
+  } catch (e) {
+    res.json({ success: false, message: "Meal adding failed!" });
+  }
+};
+
 module.exports = {
   createUser,
   userSignIn,
   signOut,
+  pushMeal,
 };
