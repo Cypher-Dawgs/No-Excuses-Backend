@@ -16,5 +16,8 @@ router.post("/sign-in", validateUserSignIn, userValidation, (req, res) => {
 router.post("/sign-out", isAuth, (req, res) => {
   userController.signOut(req, res);
 });
+router.get("/getMeals", isAuth, (req, res) => {
+  userController.getMeals(req, res);
+});
 
 module.exports = router;

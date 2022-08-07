@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
+const Meal = require("../models/Meal.model");
 
 require("dotenv").config();
 
@@ -85,8 +86,22 @@ const signOut = async (req, res) => {
     res.json({ success: true, message: "Sign out successfully!" });
   }
 };
+
+// get meals
+const getMeals = async (req, res) => {
+  const query = req.query;
+
+  try {
+    const meal = await Meal.findOne({ range: query.range });
+    return res.status(201).json({ success: true, meal: meal });
+  } catch (e) {
+    res.status(400).json({ success: false, message: "No meals found" });
+  }
+};
+
 module.exports = {
   createUser,
   userSignIn,
   signOut,
+  getMeals,
 };
