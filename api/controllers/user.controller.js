@@ -6,7 +6,7 @@ require("dotenv").config();
 
 // creating new user
 const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, score } = req.body;
   const isNewUser = await User.isThisEmailInUse(email);
   if (!isNewUser)
     return res.json({
@@ -17,6 +17,7 @@ const createUser = async (req, res) => {
     name,
     email,
     password,
+    score,
   });
   await user.save();
   res.json({ success: true, user });
@@ -103,11 +104,11 @@ const getMeals = async (req, res) => {
 // send score
 const sendScore = async (req, res) => {
   const { email, score } = req.body;
-
   try {
     const user = await User.findOneAndUpdate(
       { email: email },
-      { $push: { score: score } }
+      { $set: { score: score } },
+      { new: true }
     );
     return res.status(201).json({ success: true, user: user });
   } catch (e) {

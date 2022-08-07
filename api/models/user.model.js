@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   tokens: [{ type: Object }],
-  score: {Number, default: 0},
+  score: String,
 });
 
 userSchema.pre("save", function (next) {
