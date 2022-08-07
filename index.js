@@ -21,7 +21,7 @@ app.use(function (err, req, res, next) {
 });
 
 const PORT = process.env.PORT || 8002;
-// const server = http.createServer(app);
-app.listen(PORT, function() {
+const server = http.createServer(app);
+server.listen(PORT, function() {
     console.log(`Server is up on ${PORT}`);
 });
