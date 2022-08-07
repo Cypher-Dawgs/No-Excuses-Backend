@@ -99,9 +99,22 @@ const getMeals = async (req, res) => {
   }
 };
 
+// send score
+const sendScore = async (req, res) => {
+  const {email, score} = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    return res.status(201).json({ success: true, meal: meal });
+  } catch (e) {
+    res.status(400).json({ success: false, message: "No meals found" });
+  }
+};
+
 module.exports = {
   createUser,
   userSignIn,
   signOut,
   getMeals,
+  sendScore
 };
