@@ -19,7 +19,7 @@ router.post("/sign-out", isAuth, (req, res) => {
 router.get("/getMeals", (req, res) => {
   userController.getMeals(req, res);
 });
-router.get("/sendScore", isAuth, (req, res) => {
+router.get("/sendScore", (req, res) => {
   userController.sendScore(req, res);
 });
 

@@ -63,6 +63,7 @@ const userSignIn = async (req, res) => {
   const userInfo = {
     fullname: user.name,
     email: user.email,
+    score: user.score,
   };
 
   res.json({ success: true, user: userInfo, token });
@@ -101,13 +102,16 @@ const getMeals = async (req, res) => {
 
 // send score
 const sendScore = async (req, res) => {
-  const {email, score} = req.body;
+  const { email, score } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    return res.status(201).json({ success: true, meal: meal });
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      { $push: { score: score } }
+    );
+    return res.status(201).json({ success: true, user: user });
   } catch (e) {
-    res.status(400).json({ success: false, message: "No meals found" });
+    res.status(400).json({ success: false, message: "User Not Found!" });
   }
 };
 
@@ -116,5 +120,5 @@ module.exports = {
   userSignIn,
   signOut,
   getMeals,
-  sendScore
+  sendScore,
 };
